@@ -1,11 +1,7 @@
-// frontend/src/services/api.js
-// IMPORTANT:
-// - In development: Vite proxies /api → localhost:5000 (see vite.config.js)
-// - In production (Render): VITE_API_URL env var points to the Render backend URL
-
 import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_API_URL || "/api";
+// ✅ Backend URL hardcoded
+const BASE_URL = "https://candidate-shortlisting-system-ojfp.onrender.com/api";
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -31,7 +27,6 @@ api.interceptors.response.use(
   (error) => {
     const message =
       error.response?.data?.message || error.message || "Something went wrong";
-    // If 401 and not on auth pages, token expired — clear storage
     if (
       error.response?.status === 401 &&
       !window.location.pathname.includes("/login")
